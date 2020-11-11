@@ -41,20 +41,33 @@ for state in __state_keys:
     millions = pop / 1_000_000
 
     csv_lines = [
-        "date,projected,deaths,deathsPerMillion,deathIncrease,deathIncreasePerMillion,"
-        + "positive,positivePerMillion,positiveIncrease,positiveIncreasePerMillion"
+        "date,projected,deaths,deathsPerMillion,deathIncrease,deathIncreaseAverage,"
+        + "deathIncreasePerMillion,positive,positivePerMillion,positiveIncrease,"
+        + "positiveIncreaseAverage,positiveIncreasePerMillion"
     ]
 
-    for date in data:
+    for i, date in enumerate(data):
         death = date["death"] or 0
         deathIncrease = date["deathIncrease"] or 0
         positive = date["positive"] or 0
         positiveIncrease = date["positiveIncrease"] or 0
 
+        deathIncreaseAvg = (
+            round(sum([d["deathIncrease"] for d in data[i - 7 : i]]) / 7)
+            if i > 7
+            else deathIncrease
+        )
+        positiveIncreaseAvg = (
+            round(sum([d["positiveIncrease"] for d in data[i - 7 : i]]) / 7)
+            if i > 7
+            else positiveIncrease
+        )
+
         csv_lines.append(
             f"{date['date']},false,{death},{round(death/millions)},{deathIncrease},"
-            + f"{round(deathIncrease/millions)},{positive},{round(positive/millions)},"
-            + f"{positiveIncrease},{round(positiveIncrease/millions)}"
+            + f"{deathIncreaseAvg},{round(deathIncrease/millions)},{positive},"
+            + f"{round(positive/millions)},{positiveIncrease},{positiveIncreaseAvg},"
+            + f"{round(positiveIncrease/millions)}"
         )
 
     avg = (
@@ -92,9 +105,10 @@ for state in __state_keys:
 
         csv_lines.append(
             f"{int(f'{date:%Y%m%d}')},true,{round(death)},{round(death/millions)},"
-            + f"{round(deathIncrease)},{round(deathIncrease/millions)},"
-            + f"{round(positive)},{round(positive/millions)},{round(positiveIncrease)},"
-            + f"{round(positiveIncrease/millions)}"
+            + f"{round(deathIncrease)},{round(deathIncrease)},"
+            + f"{round(deathIncrease/millions)},{round(positive)},"
+            + f"{round(positive/millions)},{round(positiveIncrease)},"
+            + f"{round(positiveIncrease)},{round(positiveIncrease/millions)}"
         )
 
     with open(f"docs/v1/{state}.csv", "w") as csv:
