@@ -1,12 +1,17 @@
 from datetime import datetime, timedelta
+import json
 import requests
-from state_data import population
+from state_data import names, population
 
 __all_states_data = "https://covidtracking.com/api/states/daily"
 __all_states_data = requests.get(__all_states_data).json()[::-1]
 __state_keys = list(set([d["state"] for d in __all_states_data]))
 __state_keys.sort()
 __states = {}
+
+with open("docs/index.json", "w+") as index:
+    index.write(json.dumps(names))
+    index.close()
 
 for state in __state_keys:
     data = [d for d in __all_states_data if d["state"] == state]
