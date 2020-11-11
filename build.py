@@ -10,7 +10,18 @@ __state_keys.sort()
 __states = {}
 
 with open("docs/index.json", "w+") as index:
-    index.write(json.dumps(names))
+    index.write(
+        json.dumps(
+            {
+                k: {
+                    "link": f"https://mgwalker.github.io/covid19-csv/{k}.csv",
+                    "name": v,
+                    "population": population[k],
+                }
+                for (k, v) in names.items()
+            }
+        )
+    )
     index.close()
 
 for state in __state_keys:
