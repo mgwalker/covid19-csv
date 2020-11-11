@@ -3,8 +3,17 @@ import json
 import requests
 from state_data import names, population
 
+__all_us_data = "https://covidtracking.com/api/us/daily"
+__all_us_data = requests.get(__all_us_data).json()[::-1]
+__all_us_data = [{**d, "state": "US"} for d in __all_us_data]
+
+population["US"] = sum(population.values())
+names["US"] = "United States"
+
 __all_states_data = "https://covidtracking.com/api/states/daily"
 __all_states_data = requests.get(__all_states_data).json()[::-1]
+__all_states_data.extend(__all_us_data)
+
 __state_keys = list(set([d["state"] for d in __all_states_data]))
 __state_keys.sort()
 __states = {}
@@ -72,7 +81,7 @@ for state in __state_keys:
     positive = data[-1]["positive"] or 0
     positiveIncrease = data[-1]["positiveIncrease"] or 0
 
-    for i in range(21):
+    for i in range(14):
         date = date + timedelta(1)
 
         deathIncrease *= daily_death_increase
