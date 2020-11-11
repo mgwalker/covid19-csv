@@ -63,6 +63,9 @@ for state in __state_keys:
             else positiveIncrease
         )
 
+        date["deathIncreaseAverage"] = deathIncreaseAvg
+        date["positiveIncreaseAverage"] = positiveIncreaseAvg
+
         csv_lines.append(
             f"{date['date']},false,{death},{round(death/millions)},{deathIncrease},"
             + f"{deathIncreaseAvg},{round(deathIncrease/millions)},{positive},"
@@ -71,16 +74,16 @@ for state in __state_keys:
         )
 
     avg = (
-        (sum([d["deathIncrease"] for d in data[-7:]]))
-        - (sum([d["deathIncrease"] for d in data[-14:-7]]))
+        (sum([d["deathIncreaseAverage"] for d in data[-7:]]))
+        - (sum([d["deathIncreaseAverage"] for d in data[-14:-7]]))
     ) / 49
     daily_death_increase = (
         1 + (avg / data[-1]["deathIncrease"]) if data[-1]["deathIncrease"] > 0 else 1
     )
 
     avg = (
-        (sum([d["positiveIncrease"] for d in data[-7:]]))
-        - (sum([d["positiveIncrease"] for d in data[-14:-7]]))
+        (sum([d["positiveIncreaseAverage"] for d in data[-7:]]))
+        - (sum([d["positiveIncreaseAverage"] for d in data[-14:-7]]))
     ) / 49
     daily_positive_increase = (
         1 + (avg / data[-1]["positiveIncrease"])
