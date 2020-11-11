@@ -1,0 +1,22 @@
+name: update
+
+on:
+  schedule:
+    - cron: '0 * * * *'
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    container: python:3.8
+    steps:
+      - uses: actions/checkout@v1
+      - name: install dependencies
+        run: |
+          pip install pipenv
+          pipenv install --ignore-pipfile
+      - name: update the csvs
+        run: pipenv run python build.py
+      - name: commit
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
+        run: ./.github/workflows/git.sh
