@@ -23,7 +23,7 @@ with open("docs/index.json", "w+") as index:
         json.dumps(
             {
                 k: {
-                    "link": f"https://mgwalker.github.io/covid19-csv/{k}.csv",
+                    "link": f"https://mgwalker.github.io/covid19-csv/v1/{k}.csv",
                     "name": v,
                     "population": population[k],
                 }
@@ -97,7 +97,7 @@ for state in __state_keys:
             + f"{round(positiveIncrease/millions)}"
         )
 
-    with open(f"docs/{state}.csv", "w") as csv:
+    with open(f"docs/v1/{state}.csv", "w") as csv:
         csv.write("\n".join(csv_lines))
         csv.write("\n")
         csv.close()
