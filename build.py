@@ -93,9 +93,9 @@ for state in __state_keys:
 
     date = datetime.strptime(f'{data[-1]["date"]}', "%Y%m%d")
     death = data[-1]["death"] or 0
-    deathIncrease = data[-1]["deathIncrease"] or 0
+    deathIncrease = data[-1]["deathIncreaseAverage"] or 0
     positive = data[-1]["positive"] or 0
-    positiveIncrease = data[-1]["positiveIncrease"] or 0
+    positiveIncrease = data[-1]["positiveIncreaseAverage"] or 0
 
     for i in range(14):
         date = date + timedelta(1)
