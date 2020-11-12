@@ -112,9 +112,10 @@ for state in __state_keys:
         csv_lines.append(
             f"{int(f'{date:%Y%m%d}')},true,{round(death)},{round(death/millions)},"
             + f"{round(deathIncrease)},{round(deathIncrease)},"
-            + f"{round(deathIncrease/millions)},{round(positive)},"
-            + f"{round(positive/millions)},{round(positiveIncrease)},"
-            + f"{round(positiveIncrease)},{round(positiveIncrease/millions)}"
+            + f"{round(deathIncrease/millions)},{round(deathIncrease/millions)},"
+            + f"{round(positive)},{round(positive/millions)},{round(positiveIncrease)},"
+            + f"{round(positiveIncrease)},{round(positiveIncrease/millions)},"
+            + f"{round(positiveIncrease/millions)}"
         )
 
     with open(f"docs/v1/{state}.csv", "w") as csv:
