@@ -42,8 +42,9 @@ for state in __state_keys:
 
     csv_lines = [
         "date,projected,deaths,deathsPerMillion,deathIncrease,deathIncreaseAverage,"
-        + "deathIncreasePerMillion,positive,positivePerMillion,positiveIncrease,"
-        + "positiveIncreaseAverage,positiveIncreasePerMillion"
+        + "deathIncreasePerMillion,deathIncreaseAveragePerMillion,positive,"
+        + "positivePerMillion,positiveIncrease,positiveIncreaseAverage,"
+        + "positiveIncreasePerMillion,positiveIncreaseAveragePerMillion"
     ]
 
     for i, date in enumerate(data):
@@ -68,8 +69,10 @@ for state in __state_keys:
 
         csv_lines.append(
             f"{date['date']},false,{death},{round(death/millions)},{deathIncrease},"
-            + f"{deathIncreaseAvg},{round(deathIncreaseAvg/millions)},{positive},"
+            + f"{deathIncreaseAvg},{round(deathIncrease/millions)},"
+            + f"{round(deathIncreaseAvg/millions)},{positive},"
             + f"{round(positive/millions)},{positiveIncrease},{positiveIncreaseAvg},"
+            + f"{round(positiveIncrease/millions)},"
             + f"{round(positiveIncreaseAvg/millions)}"
         )
 
