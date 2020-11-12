@@ -68,9 +68,9 @@ for state in __state_keys:
 
         csv_lines.append(
             f"{date['date']},false,{death},{round(death/millions)},{deathIncrease},"
-            + f"{deathIncreaseAvg},{round(deathIncrease/millions)},{positive},"
+            + f"{deathIncreaseAvg},{round(deathIncreaseAvg/millions)},{positive},"
             + f"{round(positive/millions)},{positiveIncrease},{positiveIncreaseAvg},"
-            + f"{round(positiveIncrease/millions)}"
+            + f"{round(positiveIncreaseAvg/millions)}"
         )
 
     avg = (
