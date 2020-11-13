@@ -1,7 +1,15 @@
 from datetime import datetime, timedelta
 import json
+from math import floor, log10
 import requests
 from state_data import names, population
+
+
+def approximate(number):
+    if number > 0:
+        return round(round(number, 2 - int(floor(log10(number)))))
+    return round(number)
+
 
 __all_us_data = "https://covidtracking.com/api/us/daily"
 __all_us_data = requests.get(__all_us_data).json()[::-1]
@@ -101,6 +109,9 @@ for state in __state_keys:
     positiveIncrease = data[-1]["positiveIncreaseAverage"] or 0
 
     for i in range(14):
+        # TODO: projected values should be rounded to a few significant figures
+        # so they don't suggest certainty
+
         date = date + timedelta(1)
 
         deathIncrease *= daily_death_increase
@@ -110,12 +121,20 @@ for state in __state_keys:
         positive += positiveIncrease
 
         csv_lines.append(
-            f"{int(f'{date:%Y%m%d}')},true,{round(death)},{round(death/millions)},"
-            + f"{round(deathIncrease)},{round(deathIncrease)},"
-            + f"{round(deathIncrease/millions)},{round(deathIncrease/millions)},"
-            + f"{round(positive)},{round(positive/millions)},{round(positiveIncrease)},"
-            + f"{round(positiveIncrease)},{round(positiveIncrease/millions)},"
-            + f"{round(positiveIncrease/millions)}"
+            f"{int(f'{date:%Y%m%d}')},"
+            + "true,"
+            + f"{approximate(death)},"
+            + f"{approximate(death/millions)},"
+            + f"{approximate(deathIncrease)},"
+            + f"{approximate(deathIncrease)},"
+            + f"{approximate(deathIncrease/millions)},"
+            + f"{approximate(deathIncrease/millions)},"
+            + f"{approximate(positive)},"
+            + f"{approximate(positive/millions)},"
+            + f"{approximate(positiveIncrease)},"
+            + f"{approximate(positiveIncrease)},"
+            + f"{approximate(positiveIncrease/millions)},"
+            + f"{approximate(positiveIncrease/millions)}"
         )
 
     with open(f"docs/v1/{state}.csv", "w") as csv:
