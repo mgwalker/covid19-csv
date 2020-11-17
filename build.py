@@ -2,6 +2,8 @@ from datetime import datetime, timedelta
 import json
 from math import floor, log10
 import requests
+import numpy
+from scipy import stats
 from state_data import names, population
 
 
@@ -84,47 +86,33 @@ for state in __state_keys:
             + f"{round(positiveIncreaseAvg/millions)}"
         )
 
-    daily_death_increase = (
-        sum(
-            [
-                (d["deathIncrease"] / data[len(data) - 15 + i]["deathIncrease"])
-                if data[len(data) - 15 + i]["deathIncrease"] != 0
-                else 0
-                for i, d in enumerate(data[-14:])
-            ]
-        )
-        / 14
-    )
+    def createIncreaseCalculator(field):
+        __days = 14
+        lastDays = numpy.array([d[field] for d in data[-__days:]])
+        (m, b, _, _, _) = stats.linregress(range(__days), lastDays)
 
-    daily_positive_increase = (
-        sum(
-            [
-                (
-                    d["positiveIncreaseAverage"]
-                    / data[len(data) - 15 + i]["positiveIncreaseAverage"]
-                )
-                if data[len(data) - 15 + i]["positiveIncreaseAverage"] != 0
-                else 0
-                for i, d in enumerate(data[-14:])
-            ]
-        )
-        / 14
-    )
+        x = __days - 1
+
+        def nextValue():
+            nonlocal x
+            x += 1
+            return round(max(0, m * x + b))
+
+        return nextValue
+
+    nextDeathIncrease = createIncreaseCalculator("deathIncrease")
+    nextPositiveIncrease = createIncreaseCalculator("positiveIncrease")
 
     date = datetime.strptime(f'{data[-1]["date"]}', "%Y%m%d")
     death = data[-1]["death"] or 0
-    deathIncrease = data[-1]["deathIncreaseAverage"] or 0
     positive = data[-1]["positive"] or 0
-    positiveIncrease = data[-1]["positiveIncreaseAverage"] or 0
 
     for i in range(14):
-        # TODO: projected values should be rounded to a few significant figures
-        # so they don't suggest certainty
 
         date = date + timedelta(1)
 
-        deathIncrease *= daily_death_increase
-        positiveIncrease *= daily_positive_increase
+        deathIncrease = nextDeathIncrease()
+        positiveIncrease = nextPositiveIncrease()
 
         death += deathIncrease
         positive += positiveIncrease
@@ -150,5 +138,3 @@ for state in __state_keys:
         csv.write("\n".join(csv_lines))
         csv.write("\n")
         csv.close()
-
-    # break

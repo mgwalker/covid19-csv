@@ -9,6 +9,8 @@ flake8 = "*"
 
 [packages]
 requests = ">=2.23.0<3"
+numpy = "*"
+scipy = "*"
 
 [requires]
 python_version = "3.8"
