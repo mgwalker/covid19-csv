@@ -84,22 +84,31 @@ for state in __state_keys:
             + f"{round(positiveIncreaseAvg/millions)}"
         )
 
-    avg = (
-        (sum([d["deathIncreaseAverage"] for d in data[-7:]]))
-        - (sum([d["deathIncreaseAverage"] for d in data[-14:-7]]))
-    ) / 49
     daily_death_increase = (
-        1 + (avg / data[-1]["deathIncrease"]) if data[-1]["deathIncrease"] > 0 else 1
+        sum(
+            [
+                (d["deathIncrease"] / data[len(data) - 15 + i]["deathIncrease"])
+                if data[len(data) - 15 + i]["deathIncrease"] != 0
+                else 0
+                for i, d in enumerate(data[-14:])
+            ]
+        )
+        / 14
     )
 
-    avg = (
-        (sum([d["positiveIncreaseAverage"] for d in data[-7:]]))
-        - (sum([d["positiveIncreaseAverage"] for d in data[-14:-7]]))
-    ) / 49
     daily_positive_increase = (
-        1 + (avg / data[-1]["positiveIncrease"])
-        if data[-1]["positiveIncrease"] > 0
-        else 1
+        sum(
+            [
+                (
+                    d["positiveIncreaseAverage"]
+                    / data[len(data) - 15 + i]["positiveIncreaseAverage"]
+                )
+                if data[len(data) - 15 + i]["positiveIncreaseAverage"] != 0
+                else 0
+                for i, d in enumerate(data[-14:])
+            ]
+        )
+        / 14
     )
 
     date = datetime.strptime(f'{data[-1]["date"]}', "%Y%m%d")
@@ -141,3 +150,5 @@ for state in __state_keys:
         csv.write("\n".join(csv_lines))
         csv.write("\n")
         csv.close()
+
+    # break
