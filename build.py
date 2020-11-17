@@ -100,8 +100,8 @@ for state in __state_keys:
 
         return nextValue
 
-    nextDeathIncrease = createIncreaseCalculator("deathIncrease")
-    nextPositiveIncrease = createIncreaseCalculator("positiveIncrease")
+    nextDeathIncrease = createIncreaseCalculator("deathIncreaseAverage")
+    nextPositiveIncrease = createIncreaseCalculator("positiveIncreaseAverage")
 
     date = datetime.strptime(f'{data[-1]["date"]}', "%Y%m%d")
     death = data[-1]["death"] or 0

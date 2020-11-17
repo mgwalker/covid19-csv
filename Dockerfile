@@ -1,7 +1,7 @@
 FROM python:3.8
 
-RUN mkdir /covid19-csv
-WORKDIR /covid19-csv
+RUN mkdir /build
+WORKDIR /build
 
 RUN pip install pipenv
 
@@ -10,4 +10,4 @@ ADD Pipfile.lock .
 
 RUN pipenv install
 
-CMD ["pipenv", "run", "python"]
+CMD ["pipenv", "run", "python", "build.py"]
