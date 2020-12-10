@@ -267,7 +267,7 @@ date,projected,deaths,deathsPerMillion,deathIncrease,deathIncreaseAverage,deathI
 20201206,false,0,0,0,0,0,0,0,0,0,0,0,0
 20201207,false,0,0,0,0,0,0,0,0,0,0,0,0
 20201208,false,0,0,0,0,0,0,0,0,0,0,0,0
-20201209,true,0,0,0,0,0,0,0,0,0,0,0,0
+20201209,false,0,0,0,0,0,0,0,0,0,0,0,0
 20201210,true,0,0,0,0,0,0,0,0,0,0,0,0
 20201211,true,0,0,0,0,0,0,0,0,0,0,0,0
 20201212,true,0,0,0,0,0,0,0,0,0,0,0,0
@@ -281,3 +281,4 @@ date,projected,deaths,deathsPerMillion,deathIncrease,deathIncreaseAverage,deathI
 20201220,true,0,0,0,0,0,0,0,0,0,0,0,0
 20201221,true,0,0,0,0,0,0,0,0,0,0,0,0
 20201222,true,0,0,0,0,0,0,0,0,0,0,0,0
+20201223,true,0,0,0,0,0,0,0,0,0,0,0,0
