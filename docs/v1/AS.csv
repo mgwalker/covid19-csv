@@ -307,7 +307,7 @@ date,projected,deaths,deathsPerMillion,deathIncrease,deathIncreaseAverage,deathI
 20210115,false,0,0,0,0,0,0,0,0,0,0,0,0
 20210116,false,0,0,0,0,0,0,0,0,0,0,0,0
 20210117,false,0,0,0,0,0,0,0,0,0,0,0,0
-20210118,true,0,0,0,0,0,0,0,0,0,0,0,0
+20210118,false,0,0,0,0,0,0,0,0,0,0,0,0
 20210119,true,0,0,0,0,0,0,0,0,0,0,0,0
 20210120,true,0,0,0,0,0,0,0,0,0,0,0,0
 20210121,true,0,0,0,0,0,0,0,0,0,0,0,0
@@ -321,3 +321,4 @@ date,projected,deaths,deathsPerMillion,deathIncrease,deathIncreaseAverage,deathI
 20210129,true,0,0,0,0,0,0,0,0,0,0,0,0
 20210130,true,0,0,0,0,0,0,0,0,0,0,0,0
 20210131,true,0,0,0,0,0,0,0,0,0,0,0,0
+20210201,true,0,0,0,0,0,0,0,0,0,0,0,0
